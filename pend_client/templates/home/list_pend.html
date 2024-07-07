@@ -1,0 +1,77 @@
+{% extends "base/base.html" %}
+
+{% block title %}TODOS LOS PENDIENTES{% endblock title %}
+
+{% block content %}
+    <table class="table table-striped">
+        <div class="col-md-4">
+            <a href="{% url 'home:create_pend' %}" class="btn btn-primary">Crear pendiente</a>
+        </div>
+        <thead>
+            <th>ID</th>
+            {% if filtro == "todos" or filtro == "pendientes_ids_titles" or filtro == "sin_resolver_ids_titles" or filtro == "resueltos_ids_titles" %}
+                <th>Title</th>
+            {% endif %}
+            {% if filtro == "todos" or filtro == "pendientes_ids_userid" or filtro == "resueltos_ids_userid" or filtro == "sin_resolver_ids_userid" %}
+                <th>User</th>
+            {% endif %}
+            {% if filtro == "todos" %}
+                <th>Description</th>
+                <th>Timestamp</th>
+                <th>Priority</th>
+                <th>State</th>
+            {% endif %}
+        </thead>
+        <tbody>
+            {% for pd in pendientes %}
+                <tr>
+                    <td>{{ pd.id }}</td>
+                    {% if filtro == "todos" or filtro == "pendientes_ids_titles" or filtro == "sin_resolver_ids_titles" or filtro == "resueltos_ids_titles" %}
+                        <td>{{ pd.title }}</td>
+                    {% endif %}
+                    {% if filtro == "todos" or filtro == "pendientes_ids_userid" or filtro == "resueltos_ids_userid" or filtro == "sin_resolver_ids_userid" %}
+                        <td>{{ pd.user }}</td>
+                    {% endif %}
+                    {% if filtro == "todos" %}
+                        <td>{{ pd.description }}</td>
+                        <td>{{ pd.timestamp }}</td>
+                        <td>{{ pd.priority }}</td>
+                        <td>{{ pd.state }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <div class="col-md-4">
+        <a href="?filtro=todos" class="btn btn-primary btn-block">Todos los pendientes</a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="?filtro=pendientes_ids" class="btn btn-secondary btn-block">Pendientes (IDs)</a>
+        </div>
+        <div class="col-md-4">
+            <a href="?filtro=pendientes_ids_titles" class="btn btn-secondary btn-block">Pendientes (IDs y Title)</a>
+        </div>
+        <div class="col-md-4">
+            <a href="?filtro=pendientes_ids_userid" class="btn btn-secondary btn-block">Pendientes (IDs y UserID)</a>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a href="?filtro=sin_resolver_ids_titles" class="btn btn-warning btn-block">Sin resolver (IDs y Title)</a>
+        </div>
+        <div class="col-md-4">
+            <a href="?filtro=sin_resolver_ids_userid" class="btn btn-warning btn-block">Sin resolver (IDs y UserID)</a>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a href="?filtro=resueltos_ids_titles" class="btn btn-success btn-block">Resueltos (IDs y Title)</a>
+        </div>
+        <div class="col-md-4">
+            <a href="?filtro=resueltos_ids_userid" class="btn btn-success btn-block">Resueltos (IDs y UserID)</a>
+        </div>
+    </div>
+{% endblock content %}
